@@ -597,7 +597,8 @@ export function limitNum(number, limit) {
 */
 
 /** creates an Vector 
- * @type {(x: number, y: number) => Vector} */
+ * @type {(x: number, y: number) => Vector} 
+ * */
  export function createVector (x, y) {
   
   const pos = {x, y}
