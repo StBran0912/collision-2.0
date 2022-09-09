@@ -17,6 +17,7 @@ import * as lb2d from './lb2d.js';
  * @property {BoxProps} props
  * @property {() => void} display
  * @property {(angle: number) => void} rotate
+ * @property {(force: lb2d.Vector, angForce: number) => void} applyForce
 */
 
 /** createBox
@@ -57,11 +58,16 @@ function createBox(posx, posy, w, h) {
         lb2d.shape(props.vertices[0].pos.x, props.vertices[0].pos.y, props.vertices[1].pos.x, props.vertices[1].pos.y, props.vertices[2].pos.x, props.vertices[2].pos.y, props.vertices[3].pos.x, props.vertices[3].pos.y, 0);
         lb2d.circle(props.location.pos.x, props.location.pos.y, 2, 0);
     }
+    /** @type {(force: lb2d.Vector, angForce: number) => void} */
+    function applyForce(force, angForce) {
+
+    }
 
     return {
         props:props,
         rotate:rotate,
-        display:display
+        display:display,
+        applyForce:applyForce
     }
 }
 
