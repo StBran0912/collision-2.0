@@ -608,6 +608,7 @@ export function limitNum(number, limit) {
     pos.x = x;
     pos.y = y;
   }
+  
   /** @type {() => Vector} */
   function copy() {
     return createVector(pos.x, pos.y);
