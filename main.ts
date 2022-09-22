@@ -58,7 +58,6 @@ function draw() {
         for (let j = i+1; j < el.length; j++ ) {
             phys.checkCollision(el[i], el[j]);
         }
-        
         el[i].applyFriction()
         el[i].update();
         el[i].display();  

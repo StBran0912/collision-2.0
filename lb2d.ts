@@ -11,7 +11,9 @@ export let mouseY = 0;
 let mouseStatus = 0;
 let loop = true;
 
-/** Init Canvas and EventListener */
+/** Init Canvas and EventListener 
+ * 
+*/
 export function init(w: number, h: number) {
   canv.width = w;
   canv.height = h;
@@ -27,7 +29,9 @@ export function init(w: number, h: number) {
   canv.addEventListener("touchend", setTouchUp);
 }
 
-/** Starts Animation Loop with Callback fnDraw */
+/** Starts Animation Loop with Callback fnDraw 
+ * 
+*/
 export function startAnimation(fnDraw:()=>void) {
   let draw = fnDraw;
   loop = true;
@@ -40,38 +44,52 @@ export function startAnimation(fnDraw:()=>void) {
   window.requestAnimationFrame(animate);
 }
 
-/** get width of canvas */
+/** get width of canvas 
+ * 
+*/
 export function getWidth(): number {
   return canv.width;
 }
 
-/** get height of canvas */
+/** get height of canvas 
+ * 
+*/
 export function getHeight(): number {
   return canv.height;
 }
 
-/** stop looping */
+/** stop looping 
+ * 
+*/
 export function noLoop() {
   loop = false;
 }
 
-/** update mouse position */
+/** update mouse position 
+ * 
+*/
 function updMousePos(e: MouseEvent) {
   mouseX = e.offsetX;
   mouseY = e.offsetY;
 }
 
-/** update status down position */
+/** update status down position 
+ * 
+*/
 function setMouseDown() {
   mouseStatus = 1;
 }
 
-/** update status up position */
+/** update status up position 
+ * 
+*/
 function setMouseUp() {
   mouseStatus = 2;
 }
 
-/** update touch position */
+/** update touch position 
+ * 
+*/
 function updTouchPos(e: TouchEvent) {
   e.preventDefault();
   //@ts-ignore
@@ -80,18 +98,24 @@ function updTouchPos(e: TouchEvent) {
   mouseY = e.targetTouches[0].pageY - e.target.getBoundingClientRect().top;
 }
 
-/** update status down position */
+/** update status down position 
+ * 
+*/
 function setTouchDown(e: TouchEvent) {
   mouseStatus = 1;
   updTouchPos(e);
 }
 
-/** update status up position */
+/** update status up position 
+ * 
+*/
 export function setTouchUp() {
   mouseStatus = 2;
 }
 
-/** returns true when down position */
+/** returns true when mpuse is down position 
+ * 
+*/
 export function isMouseDown(): boolean {
   if (mouseStatus == 1) {
     return true;
@@ -100,7 +124,9 @@ export function isMouseDown(): boolean {
   }
 }
 
-/** returns true when up position */
+/** returns true when mouse is Up-Position 
+ * 
+*/
 export function isMouseUp(): boolean {
   if (mouseStatus == 2) {
     mouseStatus = 0;
@@ -110,24 +136,32 @@ export function isMouseUp(): boolean {
   }
 }
 
-/** creates Paragraph-Element on html */
+/** creates Paragraph-Element on html 
+ * 
+*/
 export function createP(item: string) {
   const newItem = document.createElement("p");
   newItem.textContent = item;
   output.appendChild(newItem);
 }
 
-/** saves the current drawing state. Use together with pop */
+/** saves the current drawing state. Use together with pop 
+ * 
+*/
 export function push() {
   ctx.save();
 }
 
-/** restores drawing state. Use together with push */
+/** restores drawing state. Use together with push 
+ * 
+*/
 export function pop() {
   ctx.restore();
 }
 
-/** Transformation to current matrix */
+/** Transformation to current matrix 
+ * 
+*/
 export function translate(x: number, y: number) {
   ctx.translate(x, y);
 }
@@ -137,7 +171,8 @@ export function rotate(n: number) {
 }
 
 /** Fillcolor of shape 
- * @color r (0..255), g (0...255), b (0...255) */
+ * @color r (0..255), g (0...255), b (0...255) 
+*/
 export function fillColor(...color: number[]) {
   let r: number;
   let g: number;
@@ -156,7 +191,8 @@ export function fillColor(...color: number[]) {
 }
 
 /** Stroke Gradiant 
- * @color 0...255 */
+ * @color 0...255 
+*/
 export function strokeGrd(color: number, x: number, y: number, max: number) {
   const grd = ctx.createRadialGradient(x, y, 5, x, y, max);
   grd.addColorStop(0, `RGB(${color},${color},${color})`);
@@ -165,7 +201,8 @@ export function strokeGrd(color: number, x: number, y: number, max: number) {
 }
 
 /** Strokecolor of shape
- * @color r (0..255), g (0...255), b (0...255)  */
+ * @color r (0..255), g (0...255), b (0...255)  
+*/
 export function strokeColor(...color: number[]) {
   let r: number;
   let g: number;
@@ -184,7 +221,8 @@ export function strokeColor(...color: number[]) {
 }
 
 /** strokewidth of line
- * @w width  */
+ * @w width  
+*/
 export function strokeWidth(w: number) {
   ctx.lineWidth = w;
 }
@@ -216,7 +254,8 @@ export function background(...color: number[]) {
  * @y position-y
  * @w width
  * @h height
- * @style 0, 1 or 2 */
+ * @style 0, 1 or 2 
+ */
 export function rect(x: number, y: number, w: number, h: number, style = 0) {
   if (style == 0) {
     ctx.strokeRect(x, y, w, h);
@@ -234,7 +273,8 @@ export function rect(x: number, y: number, w: number, h: number, style = 0) {
  * @x1 point 1
  * @y1 point 1
  * @x2 point 2
- * @y2 point 2 */
+ * @y2 point 2 
+ */
 export function line(x1: number, y1: number, x2: number, y2: number) {
   const path = new Path2D();
   path.moveTo(x1, y1);
@@ -243,14 +283,15 @@ export function line(x1: number, y1: number, x2: number, y2: number) {
   ctx.stroke(path);
 }
 /** drawing triangle
- * @param {number} x1 point 1
- * @param {number} y1 point 1
- * @param {number} x2 point 2
- * @param {number} y2 point 2
- * @param {number} x3 point 3
- * @param {number} y3 point 3
- * @param {number} style 0, 1 or 2 */
-export function triangle(x1, y1, x2, y2, x3, y3, style = 0) {
+ * @x1 point 1
+ * @y1 point 1
+ * @x2 point 2
+ * @y2 point 2
+ * @x3 point 3
+ * @y3 point 3
+ * @style 0, 1 or 2 
+ */
+export function triangle(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number, style = 0) {
   const path = new Path2D();
   path.moveTo(x1, y1);
   path.lineTo(x2, y2);
@@ -269,16 +310,17 @@ export function triangle(x1, y1, x2, y2, x3, y3, style = 0) {
 }
 
 /** drawing shape with 4 points
- * @param {number} x1 point 1
- * @param {number} y1 point 1
- * @param {number} x2 point 2
- * @param {number} y2 point 2
- * @param {number} x3 point 3
- * @param {number} y3 point 3
- * @param {number} x4 point 4
- * @param {number} y4 point 4
- * @param {number} style 0, 1 or 2 */
-export function shape(x1, y1, x2, y2, x3, y3, x4, y4, style = 0) {
+ * @x1 point 1
+ * @y1 point 1
+ * @x2 point 2
+ * @y2 point 2
+ * @x3 point 3
+ * @y3 point 3
+ * @x4 point 4
+ * @y4 point 4
+ * @style 0, 1 or 2 
+ */
+export function shape(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number, x4: number, y4: number, style = 0) {
   const path = new Path2D();
   path.moveTo(x1, y1);
   path.lineTo(x2, y2);
@@ -299,11 +341,12 @@ export function shape(x1, y1, x2, y2, x3, y3, x4, y4, style = 0) {
 
 /**
  * 
- * @param {number} x position-x
- * @param {number} y position-y
- * @param {number} radius 
- * @param {number} style 0, 1 or 2 */
-export function circle(x, y, radius, style = 0) {
+ * @x position-x
+ * @y position-y
+ * @radius radius of Circle 
+ * @style 0, 1 or 2 
+ */
+export function circle(x: number, y: number, radius: number, style = 0) {
   const path = new Path2D();
   path.arc(x, y, radius, 0, 2 * Math.PI);
   path.closePath();
@@ -320,8 +363,11 @@ export function circle(x, y, radius, style = 0) {
 }
 
 /** Draw an arrow 
- * @type {(v_base: Vector, v_target: Vector, myColor: number) => void} */
- export function drawArrow(v_base, v_target, myColor) {
+ * @v_base Base of arrow
+ * @v_target Target of arrow
+ * @myColor Color of arrow 
+ */
+ export function drawArrow(v_base: Vector, v_target: Vector, myColor: number) {
   const v_heading = subVector(v_target, v_base);
   push();
   strokeColor(myColor);
@@ -342,8 +388,10 @@ interface Perlin {
   noiseSeed: (seed: number) => void;
 }
 
-/** returns perlin object */
-export function perlinNoise():Perlin {
+/** returns perlin object 
+ * 
+*/
+export function perlinNoise(): Perlin {
   const PERLIN_YWRAPB = 4;
   const PERLIN_YWRAP = 1 << PERLIN_YWRAPB;
   const PERLIN_ZWRAPB = 8;
@@ -494,17 +542,23 @@ export function perlinNoise():Perlin {
   };
 }
 
-/** randomgenerator between n1 and n2 */
+/** randomgenerator between n1 and n2 
+ * 
+*/
 export function random(n1:number, n2:number): number {
   return Math.floor(Math.random() * (n2 - n1) + n1);
 }
 
-/** limits value between min and max */
+/** limits value between min and max 
+ * 
+*/
 export function constrain(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value));
 }
 
-/** scales value n to a new range */
+/** scales value n to a new range 
+ * 
+*/
 export function map(n:number, start1: number, stop1: number, start2: number, stop2: number): number {
   const newval = ((n - start1) / (stop1 - start1)) * (stop2 - start2) + start2;
   if (start2 < stop2) {
@@ -514,7 +568,9 @@ export function map(n:number, start1: number, stop1: number, start2: number, sto
   }
 }
 
-/** Limits number  */
+/** Limits number  
+ * 
+*/
 export function limitNum(number: number, limit: number): number {
   const vorzeichen = number < 0 ? -1 : 1;
   let numberMag = Math.abs(number);
@@ -681,7 +737,9 @@ export function createVector (x: number, y: number): Vector {
   }
 }
 
-/** creates an Random Vector */
+/** creates an Random Vector 
+ * 
+*/
  export function VectorRandom2D(): Vector {
   const angle = Math.random() * Math.PI * 2;
   const x = Math.cos(angle);
@@ -689,50 +747,65 @@ export function createVector (x: number, y: number): Vector {
   return createVector(x, y);
 }
 
-/** creates Vector with angle */
+/** creates Vector with angle 
+ * 
+*/
  export function fromAngle(angle: number, len: number): Vector {
   const x = len * Math.cos(angle);
   const y = len * Math.sin(angle);
   return createVector(x, y);
 }
 
-/** adds v2 to v1 an creates new Vector */
+/** adds v2 to v1 an creates new Vector 
+ * 
+*/
  export function addVector(v1: Vector, v2: Vector): Vector {
   return createVector(v1.pos.x + v2.pos.x, v1.pos.y + v2.pos.y);
 }
 
-/** substract v2 from v1 and create new Vector */
+/** substract v2 from v1 and create new Vector 
+ * 
+*/
  export function subVector(v1: Vector, v2: Vector): Vector {
   return createVector(v1.pos.x - v2.pos.x, v1.pos.y - v2.pos.y);
 }
 
-/** multiply vector with scalar */
+/** multiply vector with scalar 
+ * 
+*/
  export function multVector(v: Vector, n: number): Vector {
   const vmult = v.copy();
   vmult.mult(n);
   return vmult;
 }
 
-/** divide vector by scalar n */
+/** divide vector by scalar n 
+ * 
+*/
  export function divVector(v: Vector, n: number): Vector {
   const vdiv = v.copy();
   vdiv.div(n);
   return vdiv;
 }
 
-/** dot product of v1 and v2 */
+/** dot product of v1 and v2 
+ * 
+*/
  export function dotProduct(v1: Vector, v2: Vector): number {
   return v1.dot(v2);
 }
 
-/** cross product of v1 and v2 */
+/** cross product of v1 and v2 
+ * 
+*/
 export function crossProduct(v1: Vector, v2: Vector): number {
   return v1.cross(v2);
 }
 
 /** Returns Point of intersection + Scalar s between 
  * line a (a0->a1) and line b (b0->b1)
- * Example: const [Point, s] = intersect(a0, a1, b0, b1) */
+ * Example: const [Point, s] = intersect(a0, a1, b0, b1) 
+*/
  export function intersect(a0: Vector, a1: Vector, b0: Vector, b1: Vector) {
   let pt: [Vector|null, number|null] = [null, null]; // pt[0] = Point of intersection, pt[1] = scalar s
   const a = subVector(a1, a0);
@@ -753,7 +826,9 @@ export function crossProduct(v1: Vector, v2: Vector): number {
   return pt;
 }
 
-/** Mindistance between point p and line a(a0->a1) */
+/** Mindistance between point p and line a(a0->a1) 
+ * 
+*/
 export function minDist(p: Vector, a0: Vector, a1: Vector): number|null {
   let dist: number|null = null;
 
