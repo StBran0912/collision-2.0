@@ -1,21 +1,16 @@
+// @ts-check
 import * as lb2d from './lb2d.js';
 import * as phys from './physics.js';
 
-/*interface Kicking {
-    kick : { index: number|null; base: lb2d.Vector;}
-    check: ()=> void;
-} */
-
-function createKicking(el : (phys.Box|phys.Ball)[]) {
+function createKicking(el: (phys.Box|phys.Ball)[]) {
     
-
-    let kick : {index: number|null, base: lb2d.Vector} = {
-        index: null,
+    let kick = {
+        index : -1,
         base: lb2d.createVector(0, 0)
     }
     
     function check() {
-        if (lb2d.isMouseDown() && kick.index == null) {
+        if (lb2d.isMouseDown() && kick.index == -1) {
             el.forEach((element, index) => {
                 if (element.me.location.dist(lb2d.createVector(lb2d.mouseX, lb2d.mouseY)) < element.me.mass) {
                   kick.base.set(element.me.location.pos.x, element.me.location.pos.y);
@@ -24,26 +19,25 @@ function createKicking(el : (phys.Box|phys.Ball)[]) {
             })    
         }
     
-        if (lb2d.isMouseDown() && kick.index != null) {
+        if (lb2d.isMouseDown() && kick.index > -1) {
             lb2d.drawArrow(kick.base, lb2d.createVector(lb2d.mouseX, lb2d.mouseY), 100);
         }  
     
-        if (lb2d.isMouseUp() && kick.index != null) {
+        if (lb2d.isMouseUp() && kick.index > -1) {
             let mouse = lb2d.createVector(lb2d.mouseX, lb2d.mouseY);
             let force = lb2d.subVector(mouse, el[kick.index].me.location);
             el[kick.index].applyForce(force, 0);
-            kick.index = null;
+            kick.index = -1;
         }      
     }
 
     return {
-        kick,
         check
     }
 }
 
 
-let el: (phys.Box|phys.Ball)[] = [];
+let el: (phys.Box | phys.Ball)[] = [];
 let kicking = createKicking(el);
 
 function start() {    
