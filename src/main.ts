@@ -1,43 +1,8 @@
 import * as lb2d from './lb2d.js';
 import * as phys from './physics.js';
 
-function createKicking(el: (phys.MoverBox|phys.MoverBall)[]) {
-    
-    let kick = {
-        index : -1,
-        base: lb2d.createVector(0, 0)
-    }
-    
-    function check() {
-        if (lb2d.isMouseDown() && kick.index == -1) {
-            el.forEach((element, index) => {
-                if (element.me.location.dist(lb2d.createVector(lb2d.mouseX, lb2d.mouseY)) < element.me.mass) {
-                  kick.base.set(element.me.location.pos.x, element.me.location.pos.y);
-                  kick.index = index;
-                }
-            })    
-        }
-    
-        if (lb2d.isMouseDown() && kick.index > -1) {
-            lb2d.drawArrow(kick.base, lb2d.createVector(lb2d.mouseX, lb2d.mouseY), 100);
-        }  
-    
-        if (lb2d.isMouseUp() && kick.index > -1) {
-            let mouse = lb2d.createVector(lb2d.mouseX, lb2d.mouseY);
-            let force = lb2d.subVector(mouse, el[kick.index].me.location);
-            el[kick.index].applyForce(force, 0);
-            kick.index = -1;
-        }      
-    }
-
-    return {
-        check
-    }
-}
-
-
 let el: (phys.MoverBox | phys.MoverBall)[] = [];
-let kicking = createKicking(el);
+let kicking = phys.createKicking(el);
 
 function start() {    
     el.push(phys.createBox(200, 100, 110, 70));
