@@ -4,13 +4,24 @@ import * as phys from './physics.js';
 let el: (phys.MoverBox | phys.MoverBall)[] = [];
 let kicking = phys.createKicking(el);
 
-function start() {    
-    el.push(phys.createBox(200, 100, 110, 70));
-    el.push(phys.createBox(400, 100, 70, 30));
-    el.push(phys.createBox(600, 100, 60, 40));
-    el.push(phys.createBall(300, 250, 60));
-    el.push(phys.createBall(600, 250, 20));
-    
+function start() {   
+    for (let i = 0; i < 4; i++) {
+        el.push(phys.createBall(lb2d.random(0, 700), lb2d.random(0, 400), lb2d.random(10, 40)));
+    }    
+
+    for (let i = 0; i < 4; i++) {
+        el.push(phys.createBox(lb2d.random(0, 700), lb2d.random(0, 400), lb2d.random(40, 100), lb2d.random(40, 100)));
+    }
+
+    el.push(phys.createBox(0, 0, 800, 1));
+    el[8].me.mass = Infinity; el[8].me.inertia = Infinity;
+    el.push(phys.createBox(0, 0, 1, 499));
+    el[9].me.mass = Infinity; el[9].me.inertia = Infinity;
+    el.push(phys.createBox(0, 499, 800, 1));
+    el[10].me.mass = Infinity; el[10].me.inertia = Infinity;
+    el.push(phys.createBox(799, 0, 1, 499));
+    el[11].me.mass = Infinity; el[11].me.inertia = Infinity;
+   
     lb2d.init(800, 500);
     lb2d.startAnimation(draw);    
 }

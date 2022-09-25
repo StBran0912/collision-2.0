@@ -421,7 +421,7 @@ export function createKicking(el: (MoverBall|MoverBox)[]) {
     function check() {
         if (lb2d.isMouseDown() && kick.index == -1) {
             el.forEach((element, index) => {
-                if (element.me.location.dist(lb2d.createVector(lb2d.mouseX, lb2d.mouseY)) < element.me.mass) {
+                if (element.me.typ == "Ball" && element.me.location.dist(lb2d.createVector(lb2d.mouseX, lb2d.mouseY)) < element.me.mass) {
                   kick.base.set(element.me.location.pos.x, element.me.location.pos.y);
                   kick.index = index;
                 }
