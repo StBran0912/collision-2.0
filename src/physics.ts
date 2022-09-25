@@ -127,7 +127,7 @@ export function createBox(posx: number, posy:number, w:number, h: number): Mover
     }
 }
 
-export function createBall(posx: number, posy:number, radius:number) {
+export function createBall(posx: number, posy:number, radius:number): MoverBall {
     const me: BallProps = {
         typ: "Ball",
         location: lb2d.createVector(posx, posy),
