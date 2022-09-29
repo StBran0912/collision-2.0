@@ -44,6 +44,7 @@ export interface MoverBall extends Mover {
     me: BallProps
 }
 
+
 export function createBox(posx: number, posy:number, w:number, h: number): MoverBox {
 
     const me: BoxProps = {
@@ -410,37 +411,3 @@ export function checkCollision(a: MoverBall|MoverBox, b: MoverBall|MoverBox) {
         
     }
 }  
-
-export function createKicking(el: (MoverBall|MoverBox)[]) {
-    
-    let kick = {
-        index : -1,
-        base: lb2d.createVector(0, 0)
-    }
-    
-    function check() {
-        if (lb2d.isMouseDown() && kick.index == -1) {
-            el.forEach((element, index) => {
-                if (element.me.typ == "Ball" && element.me.location.dist(lb2d.createVector(lb2d.mouseX, lb2d.mouseY)) < element.me.mass) {
-                  kick.base.set(element.me.location.pos.x, element.me.location.pos.y);
-                  kick.index = index;
-                }
-            })    
-        }
-    
-        if (lb2d.isMouseDown() && kick.index > -1) {
-            lb2d.drawArrow(kick.base, lb2d.createVector(lb2d.mouseX, lb2d.mouseY), 100);
-        }  
-    
-        if (lb2d.isMouseUp() && kick.index > -1) {
-            let mouse = lb2d.createVector(lb2d.mouseX, lb2d.mouseY);
-            let force = lb2d.subVector(mouse, el[kick.index].me.location);
-            el[kick.index].applyForce(force, 0);
-            kick.index = -1;
-        }      
-    }
-
-    return {
-        check
-    }
-}
